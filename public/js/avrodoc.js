@@ -203,8 +203,6 @@ function AvroDoc(input_schemata) {
         }
     });
 
-    $("#search-schemas").on("keydown", function(){ console.log("hauhauha")});
-
     schemata_to_load = in_progress;
 
     if (in_progress === 0) {
@@ -215,18 +213,18 @@ function AvroDoc(input_schemata) {
 }
 
 function search(text, showNamespace) {
-    console.log("Calling search", text, showNamespace);
     var schemas = $(".schema").map(function(index, e){
         var el = $(e);
         return {name: el.data("schema"), element: el, namespaceElement: el.parent()};
     });
     schemas.each(function(index, schema) {
-        if (schema.namespaceElement.data("schemas").includes(text) || schema.namespaceElement.data("namespace").includes(text)) {
+        if (schema.namespaceElement.data("schemas").toLowerCase().includes(text)
+            || schema.namespaceElement.data("namespace").toLowerCase().includes(text)) {
             schema.namespaceElement.show();
 
             if (showNamespace) {
                 schema.element.show();
-            } else if (schema.name.includes(text)) {
+            } else if (schema.name.toLowerCase().includes(text)) {
                 schema.element.show();
             } else {
                 schema.element.hide();
